@@ -58,8 +58,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee oldEmployee = employeeRepository.findOne(id);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.readerForUpdating(oldEmployee).readValue(objectMapper.writeValueAsBytes(updatedEmployee));
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
+        objectMapper.readerForUpdating(oldEmployee)
+                .readValue(objectMapper.writeValueAsBytes(updatedEmployee));
+
         return employeeRepository.save(oldEmployee);
+    }
+
+    @Override
+    public void delete(Long id) {
+        logger.info("Delete employee with id: {} from repository", id);
+        employeeRepository.delete(id);
     }
 }

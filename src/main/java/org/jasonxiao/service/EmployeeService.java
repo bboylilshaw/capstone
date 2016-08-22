@@ -16,4 +16,5 @@ public interface EmployeeService {
     Optional<Employee> getById(Long id);
     Employee add(Employee employee);
     Employee update(Long id, Employee employee) throws HotelNotFoundException, IOException;
+    void delete(Long id);
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -48,15 +49,25 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+    public ResponseEntity addEmployee(@RequestBody Employee employee) {
         logger.info("Start to add a new employee");
-        return new ResponseEntity<>(employeeService.add(employee), HttpStatus.CREATED);
+        Employee savedEmployee = employeeService.add(employee);
+        return ResponseEntity
+                .created(URI.create("/api/employee/"+ savedEmployee.getId()))
+                .body(savedEmployee);
     }
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long id,
-                                                   @RequestBody Employee hotel) throws IOException, HotelNotFoundException {
+    public ResponseEntity updateEmployee(@PathVariable("id") Long id,
+                                         @RequestBody Employee hotel) throws IOException, HotelNotFoundException {
         logger.info("Start to update employee with id: {}", id);
-        return ResponseEntity.ok(employeeService.update(id, hotel));
+        return ResponseEntity.accepted().body(employeeService.update(id, hotel));
+    }
+
+    @RequestMapping(value = "/employee/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteEmployee(@PathVariable("id") Long id) {
+        logger.info("Start to delete employee with id: {}", id);
+        employeeService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
