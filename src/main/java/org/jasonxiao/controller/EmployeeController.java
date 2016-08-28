@@ -22,8 +22,7 @@ import java.util.List;
  * @author Jason Xiao
  */
 @RestController
-@RequestMapping("/api")
-public class EmployeeController {
+public class EmployeeController extends ApiBaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
     private final EmployeeService employeeService;

@@ -25,6 +25,10 @@ repositories {
 	jcenter()
 }
 
+ext {
+	nettyVersion = '4.1.4.Final'
+}
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-amqp')
 	compile('org.springframework.boot:spring-boot-starter-cache')
@@ -32,6 +36,11 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile('org.springframework.boot:spring-boot-starter-amqp')
+	compile('io.projectreactor:reactor-core')
+	compile('io.projectreactor:reactor-net')
+	compile("io.netty:netty-all:${nettyVersion}")
 	compile('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

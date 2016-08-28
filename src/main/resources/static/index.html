@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Capstone</title>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="app" ng-controller="AppController" ng-cloak>
+    <h2 style="background-color: #5555aa">
+        Topic[greetings]{{msg}}
+    </h2>
+    <h2 style="background-color: #4bb1cf">
+        Topic[another]{{another}}
+    </h2>
+</body>
+</html>
