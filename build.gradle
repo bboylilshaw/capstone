@@ -1,13 +1,13 @@
 buildscript {
-	ext {
-		springBootVersion = '1.4.0.RELEASE'
-	}
-	repositories {
-		jcenter()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+  ext {
+    springBootVersion = '1.4.0.RELEASE'
+  }
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
 }
 
 apply plugin: 'java'
@@ -15,36 +15,35 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-	baseName = 'capstone'
-	version = '0.0.1-SNAPSHOT'
+  baseName = 'capstone'
+  version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-	jcenter()
+  jcenter()
 }
 
 ext {
-	nettyVersion = '4.1.4.Final'
+  nettyVersion = '4.1.4.Final'
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-amqp')
-	compile('org.springframework.boot:spring-boot-starter-cache')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-data-redis')
-	compile('org.springframework.boot:spring-boot-devtools')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-websocket')
-	compile('org.springframework.boot:spring-boot-starter-amqp')
-	compile('io.projectreactor:reactor-core')
-	compile('io.projectreactor:reactor-net')
-	compile("io.netty:netty-all:${nettyVersion}")
-	compile('mysql:mysql-connector-java')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+  compile('org.springframework.boot:spring-boot-devtools')
+  compile('org.springframework.boot:spring-boot-starter-cache')
+  compile('org.springframework.boot:spring-boot-starter-data-jpa')
+  compile('org.springframework.boot:spring-boot-starter-data-redis')
+  compile('org.springframework.boot:spring-boot-starter-web')
+  compile('org.springframework.boot:spring-boot-starter-websocket')
+  compile('org.springframework.boot:spring-boot-starter-amqp')
+  compile('io.projectreactor:reactor-core')
+  compile('io.projectreactor:reactor-net')
+  compile("io.netty:netty-all:${nettyVersion}")
+  compile('mysql:mysql-connector-java')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '3.0'
+  gradleVersion = '3.0'
 }
