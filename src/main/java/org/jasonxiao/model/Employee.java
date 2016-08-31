@@ -25,7 +25,7 @@ public class Employee {
     private Long id;
     private String name;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonManagedReference
 //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@groupId")
     private Group group;
 

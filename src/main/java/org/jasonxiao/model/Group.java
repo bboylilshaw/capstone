@@ -1,9 +1,7 @@
 package org.jasonxiao.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +24,7 @@ public class Group {
     private String name;
     private String description;
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
 //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@employeeId")
     private List<Employee> employees;
 
