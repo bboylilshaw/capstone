@@ -1,7 +1,6 @@
 package org.jasonxiao.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.jasonxiao.exception.HotelNotFoundException;
+import org.jasonxiao.exception.EmployeeNotFoundException;
 import org.jasonxiao.model.Employee;
 
 import java.io.IOException;
@@ -15,6 +14,6 @@ public interface EmployeeService {
     List<Employee> getAll();
     Optional<Employee> getById(Long id);
     Employee add(Employee employee);
-    Employee update(Long id, Employee employee) throws HotelNotFoundException, IOException;
+    Employee update(Long id, Employee employee) throws EmployeeNotFoundException, IOException;
     void delete(Long id);
 }

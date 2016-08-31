@@ -1,9 +1,8 @@
 package org.jasonxiao.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jasonxiao.exception.HotelNotFoundException;
+import org.jasonxiao.exception.EmployeeNotFoundException;
 import org.jasonxiao.model.Employee;
 import org.jasonxiao.repository.EmployeeRepository;
 import org.slf4j.Logger;
@@ -50,10 +49,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee update(Long id, Employee updatedEmployee) throws HotelNotFoundException, IOException {
+    public Employee update(Long id, Employee updatedEmployee) throws EmployeeNotFoundException, IOException {
         Assert.notNull(updatedEmployee, "Employee object cannot be null");
         if (!employeeRepository.exists(id)) {
-            throw new HotelNotFoundException();
+            throw new EmployeeNotFoundException(id.toString());
         }
         Employee oldEmployee = employeeRepository.findOne(id);
 

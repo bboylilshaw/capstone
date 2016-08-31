@@ -1,6 +1,6 @@
 package org.jasonxiao.controller;
 
-import org.jasonxiao.exception.HotelNotFoundException;
+import org.jasonxiao.exception.EmployeeNotFoundException;
 import org.jasonxiao.model.Employee;
 import org.jasonxiao.service.EmployeeService;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public class EmployeeController extends ApiBaseController {
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.PUT)
     public ResponseEntity updateEmployee(@PathVariable("id") Long id,
-                                         @RequestBody Employee hotel) throws IOException, HotelNotFoundException {
+                                         @RequestBody Employee hotel) throws IOException, EmployeeNotFoundException {
         logger.info("Start to update employee with id: {}", id);
         return ResponseEntity.accepted().body(employeeService.update(id, hotel));
     }
