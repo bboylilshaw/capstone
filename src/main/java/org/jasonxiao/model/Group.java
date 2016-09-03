@@ -1,7 +1,9 @@
 package org.jasonxiao.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jason Xiao
@@ -25,8 +30,7 @@ public class Group {
     private String description;
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     @JsonBackReference
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@employeeId")
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
 
     public Long getId() {
         return id;

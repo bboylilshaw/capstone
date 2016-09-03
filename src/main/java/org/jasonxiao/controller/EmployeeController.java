@@ -6,7 +6,6 @@ import org.jasonxiao.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Jason Xiao
@@ -32,19 +32,21 @@ public class EmployeeController extends ApiBaseController {
         this.employeeService = employeeService;
     }
 
-    @RequestMapping("/employees")
+    @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public ResponseEntity<List<Employee>> getAllEmployee() {
         logger.info("Start to get all employees");
         return ResponseEntity.ok(employeeService.getAll());
     }
 
-    @RequestMapping("/employee/{id}")
-    public ResponseEntity getEmployeeById(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
+    public ResponseEntity getEmployee(@PathVariable("id") Long id) {
         logger.info("Start to get employee with id: {}", id);
-        if (!employeeService.getById(id).isPresent()) {
-            return new ResponseEntity<>("not found", HttpStatus.NOT_FOUND);
+        Optional<Employee> employee = employeeService.get(id);
+        if (!employee.isPresent()) {
+            logger.warn("Cannot find any employee with id: {}", id);
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(employeeService.getById(id).get());
+        return ResponseEntity.ok(employee.get());
     }
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
@@ -52,15 +54,16 @@ public class EmployeeController extends ApiBaseController {
         logger.info("Start to add a new employee");
         Employee savedEmployee = employeeService.add(employee);
         return ResponseEntity
-                .created(URI.create("/api/employee/"+ savedEmployee.getId()))
+                .created(URI.create("/api/employee/" + savedEmployee.getId()))
                 .body(savedEmployee);
     }
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.PUT)
     public ResponseEntity updateEmployee(@PathVariable("id") Long id,
-                                         @RequestBody Employee hotel) throws IOException, EmployeeNotFoundException {
+                                         @RequestBody Employee newEmployee) throws IOException, EmployeeNotFoundException {
         logger.info("Start to update employee with id: {}", id);
-        return ResponseEntity.accepted().body(employeeService.update(id, hotel));
+        Employee updatedEmployee = employeeService.update(id, newEmployee);
+        return ResponseEntity.accepted().body(updatedEmployee);
     }
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.DELETE)

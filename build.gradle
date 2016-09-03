@@ -41,6 +41,8 @@ dependencies {
   compile('io.projectreactor:reactor-net')
   compile("io.netty:netty-all:${nettyVersion}")
   compile('mysql:mysql-connector-java')
+  compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+  compile('com.fasterxml.jackson.datatype:jackson-datatype-hibernate5')
   testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

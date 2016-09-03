@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 public interface EmployeeService {
     List<Employee> getAll();
-    Optional<Employee> getById(Long id);
+    Optional<Employee> get(Long id);
     Employee add(Employee employee);
     Employee update(Long id, Employee employee) throws EmployeeNotFoundException, IOException;
     void delete(Long id);

@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> getById(Long id) {
+    public Optional<Employee> get(Long id) {
         logger.info("Get employee with id {} from repository", id);
         return Optional.ofNullable(employeeRepository.findOne(id));
     }

@@ -7,7 +7,15 @@ public enum ErrorType {
 
     UNKNOWN_ERROR(9999, "Unknown Error"),
 
-    EMPLOYEE_NOT_FOUND(1002, "Employee not found");
+    /**
+     * Employee related errors (1001 ~ 1999)
+     */
+    EMPLOYEE_NOT_FOUND(1001, "Employee not found"),
+
+    /**
+     * Group related errors (2001 ~ 2999)
+     */
+    GROUP_NOT_FOUND(2001, "Group not found");
 
     private int code;
     private String message;
