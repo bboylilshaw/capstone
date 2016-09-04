@@ -1,12 +1,14 @@
 package org.jasonxiao.controller;
 
 import org.jasonxiao.exception.GroupNotFoundException;
+import org.jasonxiao.model.Employee;
 import org.jasonxiao.model.Group;
 import org.jasonxiao.service.GroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +52,8 @@ public class GroupController extends ApiBaseController {
 
     @RequestMapping(value = "/group", method = RequestMethod.POST)
     public ResponseEntity addGroup(@RequestBody Group group) {
+        Assert.notNull(group);
+        Assert.isNull(group.getId());
         logger.info("Start to add a new group");
         Group savedGroup = groupService.add(group);
         return ResponseEntity
@@ -70,6 +74,17 @@ public class GroupController extends ApiBaseController {
         logger.info("Start to delete group with id: {}", id);
         groupService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/group/{id}/employees", method = RequestMethod.GET)
+    public ResponseEntity getGroupEmployees(@PathVariable Long id) {
+        logger.info("Start to get employees in group id: {}", id);
+        Optional<Group> group = groupService.get(id);
+        if (group.isPresent()) {
+            List<Employee> employees = group.get().getEmployees();
+            return ResponseEntity.ok(employees);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

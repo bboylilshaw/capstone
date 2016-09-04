@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAll() {
         logger.info("Get all employees from repository");
-        return employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
+        return employees == null ? Collections.emptyList() : employees;
     }
 
     @Override
@@ -68,5 +70,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Long id) {
         logger.info("Delete employee with id: {} from repository", id);
         employeeRepository.delete(id);
+    }
+
+    @Override
+    public List<Employee> getByGroupId(Long groupId) {
+        logger.info("Get employee by group id {} from repository", groupId);
+        List<Employee> employees = employeeRepository.findByGroupId(groupId);
+        return employees == null ? Collections.emptyList() : employees;
     }
 }

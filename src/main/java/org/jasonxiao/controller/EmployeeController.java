@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -33,9 +35,17 @@ public class EmployeeController extends ApiBaseController {
     }
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public ResponseEntity<List<Employee>> getAllEmployee() {
-        logger.info("Start to get all employees");
-        return ResponseEntity.ok(employeeService.getAll());
+    public ResponseEntity<List<Employee>> getEmployees(@RequestParam(value = "groupId", required = false) Long groupId) {
+        List<Employee> employees;
+        if (groupId != null) {
+            logger.info("Start to get employees in group with id {}", groupId);
+            employees = employeeService.getByGroupId(groupId);
+        } else {
+            logger.info("Start to get all employees");
+            employees = employeeService.getAll();
+        }
+
+        return ResponseEntity.ok(employees);
     }
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
@@ -51,6 +61,8 @@ public class EmployeeController extends ApiBaseController {
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
     public ResponseEntity addEmployee(@RequestBody Employee employee) {
+        Assert.notNull(employee);
+        Assert.isNull(employee.getId());
         logger.info("Start to add a new employee");
         Employee savedEmployee = employeeService.add(employee);
         return ResponseEntity

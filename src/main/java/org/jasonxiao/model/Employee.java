@@ -1,5 +1,7 @@
 package org.jasonxiao.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +20,9 @@ public class Employee {
     @GeneratedValue
     private Long id;
     private String name;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
 //    @JsonManagedReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Group group;
 
     public Long getId() {
