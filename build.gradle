@@ -28,6 +28,7 @@ repositories {
 ext {
   nettyVersion = '4.1.4.Final'
   querydslVersion = '4.1.3'
+  javaslangVersion = '2.0.2'
 }
 
 dependencies {
@@ -46,6 +47,7 @@ dependencies {
   compile('com.fasterxml.jackson.datatype:jackson-datatype-hibernate5')
   compile("com.querydsl:querydsl-jpa:${querydslVersion}")
   compile("com.querydsl:querydsl-apt:${querydslVersion}:jpa")
+  compile("io.javaslang:javaslang:${javaslangVersion}")
   testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

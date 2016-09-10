@@ -13,6 +13,6 @@ public interface GroupService {
     List<Group> getAll();
     Optional<Group> get(Long id);
     Group add(Group group);
-    Group update(Long id, Group newGroup) throws GroupNotFoundException;
+    Group update(Group newGroup) throws GroupNotFoundException;
     void delete(Long id);
 }

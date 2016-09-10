@@ -74,7 +74,8 @@ public class EmployeeController extends ApiBaseController {
     public ResponseEntity updateEmployee(@PathVariable("id") Long id,
                                          @RequestBody Employee newEmployee) throws IOException, EmployeeNotFoundException {
         logger.info("Start to update employee with id: {}", id);
-        Employee updatedEmployee = employeeService.update(id, newEmployee);
+        newEmployee.setId(id);
+        Employee updatedEmployee = employeeService.update(newEmployee);
         return ResponseEntity.accepted().body(updatedEmployee);
     }
 

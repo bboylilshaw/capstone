@@ -14,7 +14,7 @@ public interface EmployeeService {
     List<Employee> getAll();
     Optional<Employee> get(Long id);
     Employee add(Employee employee);
-    Employee update(Long id, Employee employee) throws EmployeeNotFoundException, IOException;
+    Employee update(Employee newEmployee) throws EmployeeNotFoundException, IOException;
     void delete(Long id);
     List<Employee> getByGroupId(Long groupId);
 }

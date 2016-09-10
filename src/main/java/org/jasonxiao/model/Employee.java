@@ -9,13 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author Jason Xiao
  */
 @Entity
 @Table(name = "t_employee")
-public class Employee {
+public class Employee implements Serializable {
     @Id
     @GeneratedValue
     private Long id;

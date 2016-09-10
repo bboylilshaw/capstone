@@ -65,7 +65,8 @@ public class GroupController extends ApiBaseController {
     public ResponseEntity updateGroup(@PathVariable Long id,
                                       @RequestBody Group newGroup) throws GroupNotFoundException {
         logger.info("Start to update group with id: {}", id);
-        Group updatedGroup = groupService.update(id, newGroup);
+        newGroup.setId(id);
+        Group updatedGroup = groupService.update(newGroup);
         return ResponseEntity.accepted().body(updatedGroup);
     }
 

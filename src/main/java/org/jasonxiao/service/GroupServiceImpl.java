@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -27,6 +28,7 @@ public class GroupServiceImpl implements GroupService {
         this.groupRepository = groupRepository;
     }
 
+    @Cacheable(value = "group", key = "'all.groups'")
     @Override
     public List<Group> getAll() {
         logger.info("Get all groups from repository");
@@ -35,6 +37,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Optional<Group> get(Long id) {
+        Assert.notNull(id, "Group id cannot be null");
         logger.info("Get group with id: {} from repository", id);
         Group group = groupRepository.findOne(id);
         return Optional.of(group);
@@ -42,15 +45,19 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group add(Group group) {
+        Assert.notNull(group, "Group object cannot be null");
+        Assert.isNull(group.getId(), "Group id must be null");
         logger.info("Save group to repository");
         return groupRepository.save(group);
     }
 
     @Override
-    public Group update(Long id, Group newGroup) throws GroupNotFoundException {
+    public Group update(Group newGroup) throws GroupNotFoundException {
         Assert.notNull(newGroup, "Group object cannot be null");
+        Assert.notNull(newGroup.getId(), "Group id cannot be null");
+        Long id = newGroup.getId();
         if (!groupRepository.exists(id)) {
-            logger.error("Group not found with id: {}", id);
+            logger.error("Cannot find group with id: {}", id);
             throw new GroupNotFoundException(id.toString());
         }
         Group originalGroup = groupRepository.findOne(id);
@@ -62,7 +69,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void delete(Long id) {
-        Assert.notNull(id);
+        Assert.notNull(id, "Group id cannot be null");
         groupRepository.delete(id);
     }
 }
