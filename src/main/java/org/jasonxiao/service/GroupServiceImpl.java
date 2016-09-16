@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Optional;
  * @author Jason Xiao
  */
 @Service
+@CacheConfig(cacheNames = "groups")
 public class GroupServiceImpl implements GroupService {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
@@ -28,14 +31,16 @@ public class GroupServiceImpl implements GroupService {
         this.groupRepository = groupRepository;
     }
 
-    @Cacheable(value = "group", key = "'all.groups'")
+    @Cacheable(key = "'all.groups'")
     @Override
+    @Transactional
     public List<Group> getAll() {
         logger.info("Get all groups from repository");
         return groupRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Optional<Group> get(Long id) {
         Assert.notNull(id, "Group id cannot be null");
         logger.info("Get group with id: {} from repository", id);
@@ -44,6 +49,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public Group add(Group group) {
         Assert.notNull(group, "Group object cannot be null");
         Assert.isNull(group.getId(), "Group id must be null");

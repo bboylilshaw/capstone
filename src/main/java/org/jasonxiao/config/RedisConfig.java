@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -33,31 +34,16 @@ public class RedisConfig {
         this.topic = topic;
     }
 
-
     @Bean
-    public JedisConnectionFactory redisConnectionFactory() {
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setBlockWhenExhausted(true);
-        poolConfig.setMaxTotal(25);
-        poolConfig.setMaxIdle(25);
-        poolConfig.setMinIdle(1);
-        poolConfig.setMaxWaitMillis(1000);
-        poolConfig.setTestOnBorrow(true);
-        poolConfig.setTestOnCreate(true);
-        poolConfig.setTestOnReturn(true);
-
-        JedisConnectionFactory connectionFactory = new JedisConnectionFactory();
-        connectionFactory.setUsePool(true);
-        connectionFactory.setPoolConfig(poolConfig);
-        connectionFactory.setTimeout(15);
-        return connectionFactory;
+    public RedisConnectionFactory redisConnectionFactory() {
+        return new JedisConnectionFactory();
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setEnableTransactionSupport(true);
+        redisTemplate.setConnectionFactory(connectionFactory);
+//        redisTemplate.setEnableTransactionSupport(true);
         return redisTemplate;
     }
 

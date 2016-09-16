@@ -8,8 +8,10 @@ import org.jasonxiao.repository.EmployeeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ import java.util.Optional;
  * @author Jason Xiao
  */
 @Service
+@CacheConfig(cacheNames = "employees")
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
@@ -31,8 +34,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    @Cacheable("employee")
+    @Cacheable(key = "'all.employees'")
     @Override
+    @Transactional
     public List<Employee> getAll() {
         logger.info("Get all employees from repository");
         List<Employee> employees = employeeRepository.findAll();
