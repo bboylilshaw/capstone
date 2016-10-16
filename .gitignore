@@ -4,3 +4,6 @@ build/
 classes/
 out/
 generated/
+node_modules/
+npm-debug.log
+dist/
