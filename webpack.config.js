@@ -39,12 +39,12 @@ module.exports = {
         test: /\.pug$/,
         include: frontend,
         loader: 'pug'
+      },
+      {
+        test: /\.scss$/,
+        include: frontend,
+        loaders: ['style', 'css', 'sass']
       }
-      // {
-      //   test: /\.scss$/,
-      //   include: frontend,
-      //   loaders: ['style', 'css', 'sass']
-      // }
     ]
   },
   plugins: debug ? [] : [

@@ -1,0 +1,6 @@
+header
+  md-toolbar(ng-controller='ToolbarController as vm', layout='row')
+    div.md-toolbar-tools
+      md-button.md-icon-button(ng-click='vm.toggleSidenav()', hide-gt-sm)
+        i.material-icons menu
+      a(ng-href='/') Jason

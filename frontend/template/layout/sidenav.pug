@@ -1,0 +1,7 @@
+div(ng-controller='SidenavController as vm', layout='column')
+  md-sidenav.md-whiteframe-4dp(md-is-locked-open='$mdMedia("gt-sm")', md-component-id='left', flex)
+    md-list(ng-click='vm.toggleSidenav()')
+      md-list-item
+        md-button(ui-sref='blog') Blog
+      md-list-item
+        md-button(ui-sref='about') About me

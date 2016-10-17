@@ -1,3 +1,6 @@
-div(ng-controller='HomeController as vm')
-  h1 {{vm.name}}
-  h1 {{test}}
+extends layout/layout
+
+block content
+  div(ng-controller='HomeController as vm')
+    h1 {{vm.name}}
+    h1 {{test}}
