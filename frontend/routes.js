@@ -8,5 +8,9 @@ function routes($stateProvider, $urlRouterProvider) {
     .state('home', {
       url: '/',
       template: require('./template/home.pug')
+    })
+    .state('login', {
+      url: '/login',
+      template: require('./template/login.pug')
     });
 }

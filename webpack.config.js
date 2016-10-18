@@ -14,7 +14,7 @@ if (debug) {
 }
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: 'eval',
   entry: entryFiles,
   output: {
     path: DIST_PATH,

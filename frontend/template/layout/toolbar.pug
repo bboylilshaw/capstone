@@ -1,6 +1,7 @@
-header
-  md-toolbar(ng-controller='ToolbarController as vm', layout='row')
-    div.md-toolbar-tools
-      md-button.md-icon-button(ng-click='vm.toggleSidenav()', hide-gt-sm)
-        i.material-icons menu
-      a(ng-href='/') Jason
+md-toolbar(ng-controller='ToolbarController as vm', layout='row')
+  div.md-toolbar-tools(flex=50)
+    md-button.md-icon-button(ng-click='vm.toggleSidenav()', hide-gt-sm)
+      i.material-icons menu
+    a(ng-href='/') Jason
+  div.md-toolbar-tools(layout='row', layout-align='end center', flex=50)
+    md-button(ui-sref='login') Login

@@ -1,0 +1,18 @@
+div.login(layout='row')
+  md-card.md-whiteframe-6dp(layout='column' flex)
+    md-card-title(layout='column', flex=20)
+      md-card-title-text
+        span.md-headline Please Login
+    md-card-content(layout='column', flex)
+      md-input-container
+        label Email
+        md-icon
+          i.material-icons person
+        input(type='email')
+      md-input-container
+        label Password
+        md-icon
+          i.material-icons lock
+        input(type='password')
+    md-card-actions(layout='row', layout-align='center center', flex=15)
+      md-button.md-raised.md-primary(flex=50) Login
