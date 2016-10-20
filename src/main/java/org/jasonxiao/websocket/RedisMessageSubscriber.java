@@ -1,25 +1,23 @@
-package org.jasonxiao.subscriber;
+package org.jasonxiao.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 /**
  * @author Jason Xiao
  */
-@Component
 public class RedisMessageSubscriber implements MessageListener {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisMessageSubscriber.class);
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @Autowired
     public RedisMessageSubscriber(SimpMessagingTemplate simpMessagingTemplate) {
+        Assert.notNull(simpMessagingTemplate, "SimpMessagingTemplate cannot be null!");
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 

@@ -15,8 +15,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class CacheConfig {
 
     @Bean
-    public CacheManager cacheManager(RedisTemplate<String, Object> rabbitTemplate) {
-        RedisCacheManager cacheManager = new RedisCacheManager(rabbitTemplate);
+    public CacheManager cacheManager(RedisTemplate<String, Object> redisTemplate) {
+        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
         cacheManager.setTransactionAware(true);
         cacheManager.setDefaultExpiration(60); // expire in 1 min
 //        cacheManager.setUsePrefix(true);

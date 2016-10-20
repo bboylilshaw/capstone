@@ -1,10 +1,11 @@
 package org.jasonxiao.config;
 
-import org.jasonxiao.subscriber.RedisMessageSubscriber;
+import org.jasonxiao.websocket.RedisMessageSubscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,7 +13,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.Topic;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
-import redis.clients.jedis.JedisPoolConfig;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,18 +26,10 @@ import java.util.List;
 public class RedisConfig {
 
     private final String[] topic;
-    private final RedisMessageSubscriber redisMessageSubscriber;
 
     @Autowired
-    public RedisConfig(@Value("${redis.channel.topic}") String[] topic,
-                       RedisMessageSubscriber redisMessageSubscriber) {
-        this.redisMessageSubscriber = redisMessageSubscriber;
+    public RedisConfig(@Value("${redis.channel.topic}") String[] topic) {
         this.topic = topic;
-    }
-
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new JedisConnectionFactory();
     }
 
     @Bean
@@ -48,15 +41,16 @@ public class RedisConfig {
     }
 
     @Bean
-    public MessageListenerAdapter messageListener() {
-        return new MessageListenerAdapter(redisMessageSubscriber);
+    public MessageListenerAdapter messageListener(SimpMessagingTemplate messagingTemplate) {
+        return new MessageListenerAdapter(new RedisMessageSubscriber(messagingTemplate));
     }
 
     @Bean
-    public RedisMessageListenerContainer redisContainer() {
+    public RedisMessageListenerContainer redisContainer(RedisConnectionFactory connectionFactory,
+                                                        MessageListener messageListener) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(redisConnectionFactory());
-        container.addMessageListener(messageListener(), topics());
+        container.setConnectionFactory(connectionFactory);
+        container.addMessageListener(messageListener, topics());
         return container;
     }
 

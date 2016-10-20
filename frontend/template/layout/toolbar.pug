@@ -4,4 +4,5 @@ md-toolbar(ng-controller='ToolbarController as vm', layout='row')
       i.material-icons menu
     a(ng-href='/') Jason
   div.md-toolbar-tools(layout='row', layout-align='end center', flex=50)
+    md-button(ng-click='vm.showMsg()') Show Message
     md-button(ui-sref='login') Login
