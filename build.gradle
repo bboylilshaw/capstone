@@ -39,7 +39,7 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-web')
   compile('org.springframework.boot:spring-boot-starter-websocket')
   compile('org.springframework.boot:spring-boot-starter-amqp')
-//  compile('org.springframework.boot:spring-boot-starter-security')
+  compile('org.springframework.boot:spring-boot-starter-security')
   compile('io.projectreactor:reactor-core')
   compile('io.projectreactor:reactor-net')
   compile("io.netty:netty-all:${nettyVersion}")
@@ -49,6 +49,7 @@ dependencies {
   compile("com.querydsl:querydsl-jpa:${querydslVersion}")
   compile("com.querydsl:querydsl-apt:${querydslVersion}:jpa")
   compile("io.javaslang:javaslang:${javaslangVersion}")
+  compile('io.jsonwebtoken:jjwt:0.7.0')
 
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'com.h2database:h2'

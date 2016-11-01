@@ -4,13 +4,13 @@ angular
   .module(app)
   .factory('notifier', notifier);
 
-notifier.$inject = ['$mdToast', '$websocket'];
+notifier.$inject = ['$mdToast', '$websocket', '$location'];
 
-function notifier($mdToast, $websocket) {
-  var ws = $websocket('ws://localhost:8080/notification');
+function notifier($mdToast, $websocket, $location) {
+  const uri = 'ws://' + $location.host() + ':' + $location.port() + '/notification';
+  const ws = $websocket(uri);
   ws.onMessage(function (msg) {
-    // console.log('onMessage');
-    // console.log(msg);
+    console.log(msg);
     $mdToast.show(
       $mdToast.simple()
         .textContent(msg.data)

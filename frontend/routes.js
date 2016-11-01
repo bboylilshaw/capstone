@@ -1,6 +1,7 @@
 export default routes;
 
-function routes($stateProvider, $urlRouterProvider) {
+function routes($httpProvider, $stateProvider, $urlRouterProvider) {
+  $httpProvider.interceptors.push('TokenAuthInterceptor');
 
   $urlRouterProvider.otherwise('/');
 
